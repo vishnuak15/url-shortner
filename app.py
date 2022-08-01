@@ -1,11 +1,14 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('home.html', name='home')
+    return render_template('home.html', name='Vishnu')
 
-@app.route('/about')
-def about():
-    return "This is a Url shortner"
+@app.route('/your-url',methods=[ 'GET','POST'])
+def your_url():
+    if request.method == 'POST':
+        return render_template('your_url.html', code = request.form['code'])
+    else:
+        return redirect(url_for('home'))
